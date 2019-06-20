@@ -51,17 +51,23 @@ const renderRules = {
     );
   },
   // a
-  link: (node, children, parent, styles) => {
+  link: (node, children, parent, styles, onLinkPress) => {
+    const url = node.attributes.href;
     return (
-      <Text key={node.key} style={styles.link} onPress={() => openUrl(node.attributes.href)}>
+      <Text key={node.key} style={styles.link} onPress={() => (onLinkPress ? onLinkPress(url) : openUrl(url))}>
         {children}
       </Text>
     );
   },
   // a with a non text element nested inside
-  blocklink: (node, children, parent, styles) => {
+  blocklink: (node, children, parent, styles, onLinkPress) => {
+    const url = node.attributes.href;
     return (
-      <TouchableWithoutFeedback key={node.key} onPress={() => openUrl(node.attributes.href)} style={styles.blocklink}>
+      <TouchableWithoutFeedback
+        key={node.key}
+        onPress={() => (onLinkPress ? onLinkPress(url) : openUrl(url))}
+        style={styles.blocklink}
+      >
         <View style={styles.image}>{children}</View>
       </TouchableWithoutFeedback>
     );
